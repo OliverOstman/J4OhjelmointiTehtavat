@@ -1,2 +1,1 @@
-# Jakso 4 - Mediapalvelut ja käyttäjäkokemus
-# Ohjelmointi Tehtävät
+# Jakso 4 - Mediapalvelut ja käyttäjäkokemus - Ohjelmointi Tehtävät
