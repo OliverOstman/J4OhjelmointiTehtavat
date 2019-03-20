@@ -1,26 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/*
 class Tr extends React.Component {
     render() {
         return this.props.picArray.map((prop) => (
-           <p>{ prop.description }</p>
+                <tr>
+                    <td>
+                    <img src={prop.thumbnails.w160}></img>
+                    </td>
+                    <td>
+                    <p>{prop.title}</p>
+                    <p>{prop.description}</p>
+                    </td>
+                    <td>
+                    <a href={prop.filename}>View</a>
+                    </td>
+                </tr>
         ));
-    }
-}
-*/
-
-class Tr extends React.Component {
-    render() {
-        return (
-            <td>
-                <img src={this.props.picArray.thumbnails.w160}></img>
-                <p>{this.props.picArray.title}</p>
-                <p>{this.props.picArray.description}</p>
-                <a href={this.props.picArray.filename}>View</a>
-            </td>
-        )
     }
 }
 

@@ -2,7 +2,6 @@ import React from 'react';
 import Tr from './tr';
 import PropTypes from 'prop-types';
 
-/*
 const Tbody = (props) => {
     return (
         <tbody>
@@ -10,8 +9,8 @@ const Tbody = (props) => {
         </tbody>
     );
 };
-*/
 
+/*
 class Tbody extends React.Component {
     render() {
         return this.props.picArray.map((prop) => (
@@ -21,7 +20,7 @@ class Tbody extends React.Component {
         ));
     }
 }
-
+*/
 Tbody.propTypes = {
     picArray: PropTypes.array
 };
