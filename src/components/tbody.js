@@ -10,17 +10,6 @@ const Tbody = (props) => {
     );
 };
 
-/*
-class Tbody extends React.Component {
-    render() {
-        return this.props.picArray.map((prop) => (
-            <tbody>
-                <Tr picArray={prop}/>
-            </tbody>
-        ));
-    }
-}
-*/
 Tbody.propTypes = {
     picArray: PropTypes.array
 };
