@@ -8,9 +8,13 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('test.json').then((response) => {
+    fetch('http://media.mw.metropolia.fi/wbma/media').then((response) => {
+      console.log(response.json());
       return response.json();
     }).then(json => this.setState({ picArray: json}))
+        .catch((error) => {
+          console.log(error);
+        })
   }
 
   render() {
