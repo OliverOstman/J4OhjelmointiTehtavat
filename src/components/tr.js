@@ -6,14 +6,14 @@ class Tr extends React.Component {
         return this.props.picArray.map((prop) => (
                 <tr>
                     <td>
-                    <img src={prop.thumbnails.w160}></img>
+                        <img src={prop.thumbnails.w160} alt={'test'}></img>
                     </td>
                     <td>
-                    <p>{prop.title}</p>
-                    <p>{prop.description}</p>
+                        <p>{prop.title}</p>
+                        <p>{prop.description}</p>
                     </td>
                     <td>
-                    <a href={prop.filename}>View</a>
+                        <a href={prop.filename}>View</a>
                     </td>
                 </tr>
         ));
