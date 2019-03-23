@@ -8,11 +8,19 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('http://media.mw.metropolia.fi/wbma/media').then((response) => {
+    let test = [];
+    fetch('http://media.mw.metropolia.fi/wbma/media/').then((response) => {
       return response.json();
     }).then((json) => {
-      console.log(json);
-      this.setState({picArray: json});
+      test = json;
+      Promise.all(test.map(item => {
+        return fetch('http://media.mw.metropolia.fi/wbma/media/' + item.file_id).
+        then(response => {
+          return response.json();
+        });
+      })).then(items => {
+        this.setState({picArray: items})
+      });
     }).catch((error) => {
           console.log(error);
         })
