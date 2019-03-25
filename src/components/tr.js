@@ -1,28 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Tr extends React.Component {
-    render() {
-        console.log(this.props);
-        return this.props.picArray.map((prop) => (
-                <tr>
-                    <td>
-                        <img src={"http://media.mw.metropolia.fi/wbma/uploads/" + prop.thumbnails.w160} alt={'No image'}></img>
-                    </td>
-                    <td>
-                        <p>{prop.title}</p>
-                        <p>{prop.description}</p>
-                    </td>
-                    <td>
-                        <a href={"http://media.mw.metropolia.fi/wbma/uploads/" + prop.filename}>View</a>
-                    </td>
-                </tr>
-        ));
+const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
+
+const Img = (props) => {
+    const {thumbnails, screenshot, title} = props.pic;
+    if (thumbnails !== null) {
+        return <img src={mediaUrl + thumbnails.w160} alt={title}/>;
+    } else {
+        return <img src={mediaUrl + screenshot} alt={title}/>;
     }
-}
+};
+
+const Tr = (props) => {
+  const {title, description, filename} = props.pic;
+  return (
+      <tr>
+          <td>
+              <Img pic={props.pic}/>
+          </td>
+          <td>
+              <h3>{title}</h3>
+              <p>{description}</p>
+          </td>
+          <td>
+              <a href={mediaUrl + filename}>View</a>
+          </td>
+      </tr>
+  );
+};
 
 Tr.propTypes = {
-    picArray: PropTypes.array
+    pic: PropTypes.object,
 };
 
 export default Tr;

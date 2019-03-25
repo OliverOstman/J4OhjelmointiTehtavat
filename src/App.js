@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Table from './components/table'
+import {getAllMedia} from "./utils/MediaAPI";
 
 class App extends Component {
   state = {
@@ -8,22 +9,9 @@ class App extends Component {
   };
 
   componentDidMount() {
-    let test = [];
-    fetch('http://media.mw.metropolia.fi/wbma/media/').then((response) => {
-      return response.json();
-    }).then((json) => {
-      test = json;
-      Promise.all(test.map(item => {
-        return fetch('http://media.mw.metropolia.fi/wbma/media/' + item.file_id).
-        then(response => {
-          return response.json();
-        });
-      })).then(items => {
-        this.setState({picArray: items})
-      });
-    }).catch((error) => {
-          console.log(error);
-        })
+    getAllMedia().then(items => {
+      this.setState({picArray: items});
+    })
   }
 
   render() {
