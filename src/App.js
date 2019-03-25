@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
-import Table from './components/table'
 import {getAllMedia} from "./utils/MediaAPI";
+import Nav from "./components/Nav";
+import Home from "./views/Home";
 
 class App extends Component {
   state = {
@@ -17,7 +17,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Table picArray={this.state.picArray}/>
+        <Nav/>
+        <Home picArray={this.state.picArray}/>
       </div>
     );
   }
