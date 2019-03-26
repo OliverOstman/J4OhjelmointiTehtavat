@@ -1,5 +1,3 @@
-import React from 'react';
-
 const url = "http://media.mw.metropolia.fi/wbma/media/";
 
 const getAllMedia = () => {
@@ -16,4 +14,11 @@ const getAllMedia = () => {
     })
 };
 
+const getSingleMedia = (id) => {
+    return fetch("http://media.mw.metropolia.fi/wbma/media/" + id).then(response => {
+        return response.json();
+    }).then(json => this.setState({ picArray: json}));
+};
+
 export {getAllMedia};
+export {getSingleMedia};
