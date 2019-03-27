@@ -5,6 +5,7 @@ import Nav from "./components/Nav";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import Single from "./views/Single";
+import Login from "./views/Login";
 
 class App extends Component {
   state = {
@@ -20,7 +21,7 @@ class App extends Component {
   // Muista vaihtaa basename!
   render() {
     return (
-        <Router basename='/~olivero/route'>
+        <Router basename='/~olivero/login'>
           <div className="container">
             <Nav/>
             <Route exact path="/" render={(props) => (
@@ -28,6 +29,7 @@ class App extends Component {
             )}/>
             <Route path="/profile" component={Profile}/>
             <Route path='/single/:id' exact component={Single} />
+            <Route path='/login' component={Login}/>
           </div>
         </Router>
     );
