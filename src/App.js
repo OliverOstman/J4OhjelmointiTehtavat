@@ -17,16 +17,17 @@ class App extends Component {
     })
   }
 
+  // Muista vaihtaa basename!
   render() {
     return (
-        <Router>
+        <Router basename='/~olivero/route'>
           <div className="container">
             <Nav/>
             <Route exact path="/" render={(props) => (
                 <Home {...props} picArray={this.state.picArray}/>
             )}/>
             <Route path="/profile" component={Profile}/>
-            <Route path="/single" component={Single}/>
+            <Route path='/single/:id' exact component={Single} />
           </div>
         </Router>
     );

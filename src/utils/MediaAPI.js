@@ -15,9 +15,11 @@ const getAllMedia = () => {
 };
 
 const getSingleMedia = (id) => {
-    return fetch("http://media.mw.metropolia.fi/wbma/media/" + id).then(response => {
+    return fetch(url + id).then(response => {
         return response.json();
-    }).then(json => this.setState({ picArray: json}));
+    }).then(json => {
+        return json;
+    });
 };
 
 export {getAllMedia};
