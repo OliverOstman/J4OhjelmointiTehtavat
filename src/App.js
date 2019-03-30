@@ -24,12 +24,13 @@ class App extends Component {
         <Router basename='/~olivero/login'>
           <div className="container">
             <Nav/>
+            <Route path='/' component={Login}/>
             <Route exact path="/" render={(props) => (
                 <Home {...props} picArray={this.state.picArray}/>
             )}/>
             <Route path="/profile" component={Profile}/>
             <Route path='/single/:id' exact component={Single} />
-            <Route path='/login' component={Login}/>
+
           </div>
         </Router>
     );

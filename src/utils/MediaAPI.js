@@ -22,5 +22,17 @@ const getSingleMedia = (id) => {
     });
 };
 
+const register = () => {
+
+};
+
+const login = () => {
+
+};
+
+const checkIfUsernameExists = () => {
+
+};
+
 export {getAllMedia};
 export {getSingleMedia};

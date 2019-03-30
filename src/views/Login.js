@@ -8,49 +8,59 @@ class Login extends Component {
         full_name: '',
     };
 
-    handleInputChange = (evt) => {
-        const target = evt.target;
-        const value = target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value,
-        });
+    handleSubmit = (evt) => {
+        evt.preventDefault();
+        if (evt.target.length === 3) {
+            this.setState({
+                [evt.target[0].name]: evt.target[0].value,
+                [evt.target[1].name]: evt.target[1].value,
+            });
+        } else {
+            this.setState({
+                [evt.target[0].name]: evt.target[0].value,
+                [evt.target[1].name]: evt.target[1].value,
+                [evt.target[2].name]: evt.target[2].value,
+                [evt.target[3].name]: evt.target[3].value,
+            });
+        }
     };
 
-    test = (item) => {
-        console.log("test");
-        item.preventDefault();
+    divStyle = {
+        width: '50%',
+    };
+
+    mainStyle = {
+        display: 'flex',
     };
 
     render() {
         return (
-            <React.Fragment>
-                <div>
+            <div style={this.mainStyle}>
+                <div style={this.divStyle}>
                     <h1>Login</h1>
-                    <form onSubmit={this.test}>
+                    <form onSubmit={this.handleSubmit}>
                         Username: <br/>
-                        <input type='text' name='username' value={this.state.username} onChange={this.handleInputChange}/> <br/>
+                        <input type='text' name='username' /> <br/>
                         Password: <br/>
-                        <input type='password' name='password' value={this.state.password} onChange={this.handleInputChange}/> <br/>
+                        <input type='password' name='password' /> <br/>
                         <input type='submit'/>
                     </form>
                 </div>
-                <div>
+                <div style={this.divStyle}>
                     <h1>Register</h1>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         Username: <br/>
-                        <input type='text' name='username'/> <br/>
+                        <input type='text' name='username' /> <br/>
                         Email: <br/>
                         <input type='text' name='email'/> <br/>
                         Full name: <br/>
                         <input type='text' name='full_name'/> <br/>
                         Password: <br/>
-                        <input type='password' name='password'/> <br/>
+                        <input type='password' name='password' /> <br/>
                         <input type='submit'/>
                     </form>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 }
