@@ -20,8 +20,6 @@ class Login extends Component {
 
     handleLoginSubmit = (evt) => {
         evt.preventDefault();
-        console.log(evt.target[1].name);
-        console.log(evt.target[1].value);
         this.setState({
             [evt.target[0].name]: evt.target[0].value,
             [evt.target[1].name]: evt.target[1].value,
@@ -40,7 +38,6 @@ class Login extends Component {
             [evt.target[3].name]: evt.target[3].value,
         });
         register(this.state).then(user => {
-            console.log(user);
             setTimeout(() => {
                 this.doLogin();
             }, 5);

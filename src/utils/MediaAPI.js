@@ -20,12 +20,6 @@ const getSingleMedia = (id) => {
     });
 };
 
-/*
-.then(json => {
-        return json;
-    });
- */
-
 const login = (username, password) => {
     const settings = {
         method: 'POST',
