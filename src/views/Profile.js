@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const Profile = (props) => {
     const {username, email, full_name} = props.user;
+    // <img src={profile_pic} alt="username"/> , , profile_pic
     return (
         <React.Fragment>
             <h1>Profile</h1>

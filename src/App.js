@@ -15,6 +15,7 @@ class App extends Component {
   };
 
   setUser = (user) => {
+    // hae profiilikuva ja liitä user-objektiin
     this.setState({user});
   };
 

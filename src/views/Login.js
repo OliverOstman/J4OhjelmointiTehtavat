@@ -4,10 +4,13 @@ import {login, register, getUser} from '../utils/MediaAPI';
 
 class Login extends Component {
     state = {
-        username: '',
-        password: '',
-        email: '',
-        full_name: '',
+        user: {
+            username: '',
+            password: '',
+            email: '',
+            full_name: '',
+        },
+        toggleForm: true,
     };
 
     divStyle = {
@@ -20,37 +23,43 @@ class Login extends Component {
 
     handleLoginSubmit = (evt) => {
         evt.preventDefault();
-        this.setState({
-            [evt.target[0].name]: evt.target[0].value,
-            [evt.target[1].name]: evt.target[1].value,
-        });
-        setTimeout(() => {
-            this.doLogin();
-        }, 5);
+        this.doLogin();
     };
 
     handleRegisterSubmit = (evt) => {
         evt.preventDefault();
-        this.setState({
-            [evt.target[0].name]: evt.target[0].value,
-            [evt.target[1].name]: evt.target[1].value,
-            [evt.target[2].name]: evt.target[2].value,
-            [evt.target[3].name]: evt.target[3].value,
-        });
-        register(this.state).then(user => {
-            setTimeout(() => {
-                this.doLogin();
-            }, 5);
+        register(this.state.user).then(user => {
+            this.doLogin();
         });
     };
 
     doLogin = () => {
-        login(this.state.username, this.state.password).then(response => {
+        login(this.state.user.username, this.state.user.password).then(response => {
             console.log(response);
             this.props.setUser(response.user);
             localStorage.setItem('token', response.token);
             this.props.history.push('/home');
         });
+    };
+
+    handleInputChange = (evt) => {
+        const target = evt.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState((prevState) => {
+            return {
+                user: {
+                    ...prevState.user,
+                    [name]: value,
+                },
+            };
+        });
+    };
+
+    checkUserAvailable = (evt) => {
+      //tarkasta onko käyttäjätunnus vappa
+      //jos ei, tee esim alert()
     };
 
     componentDidMount() {
@@ -70,9 +79,9 @@ class Login extends Component {
                     <h1>Login</h1>
                     <form onSubmit={this.handleLoginSubmit}>
                         Username: <br/>
-                        <input type='text' name='username'/> <br/>
+                        <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
                         Password: <br/>
-                        <input type='password' name='password'/> <br/>
+                        <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
                         <button type="submit">Login</button>
                     </form>
                 </div>
@@ -80,13 +89,13 @@ class Login extends Component {
                     <h1>Register</h1>
                     <form onSubmit={this.handleRegisterSubmit}>
                         Username: <br/>
-                        <input type='text' name='username'/> <br/>
+                        <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
                         Email: <br/>
-                        <input type='email' name='email'/> <br/>
+                        <input type='email' name='email' value={this.state.user.email} onChange={this.handleInputChange}/> <br/>
                         Full name: <br/>
-                        <input type='text' name='full_name'/> <br/>
+                        <input type='text' name='full_name' value={this.state.user.full_name} onChange={this.handleInputChange}/> <br/>
                         Password: <br/>
-                        <input type='password' name='password'/> <br/>
+                        <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
                         <button type="submit">Register</button>
                     </form>
                 </div>
