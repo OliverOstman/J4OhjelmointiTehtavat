@@ -29,6 +29,7 @@ class Login extends Component {
     handleRegisterSubmit = (evt) => {
         evt.preventDefault();
         register(this.state.user).then(user => {
+            console.log(user);
             this.doLogin();
         });
     };
@@ -70,7 +71,7 @@ class Login extends Component {
                 this.props.history.push('/home');
             });
         }
-    };
+    }
 
     render() {
         return (
