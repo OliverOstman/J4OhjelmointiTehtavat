@@ -13,4 +13,4 @@
 [Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/route) - [Sivusto](http://users.metropolia.fi/~olivero/route/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/route/src)
 
 ## Login
-[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/login) - [Sivusto](http://users.metropolia.fi/~olivero/login/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/login/srcs)
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/login) - [Sivusto](http://users.metropolia.fi/~olivero/login/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/login/src)
