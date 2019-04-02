@@ -6,31 +6,52 @@ import Home from "./views/Home";
 import Profile from "./views/Profile";
 import Single from "./views/Single";
 import Login from "./views/Login";
+import Logout from "./views/Logout";
 
 class App extends Component {
   state = {
-    picArray: []
+    picArray: [],
+    user: null,
+  };
+
+  setUser = (user) => {
+    this.setState({user});
+  };
+
+  checkLogin = () => {
+    return this.state.user !== null;
   };
 
   componentDidMount() {
     getAllMedia().then(items => {
       this.setState({picArray: items});
     })
-  }
+  };
 
   // Muista vaihtaa basename!
   render() {
     return (
         <Router basename='/~olivero/login'>
           <div className="container">
-            <Nav/>
-            <Route path='/' component={Login}/>
-            <Route exact path="/" render={(props) => (
+            <Nav checkLogin={this.checkLogin}/>
+
+            <Route path='/home' render={(props) => (
                 <Home {...props} picArray={this.state.picArray}/>
             )}/>
-            <Route path="/profile" component={Profile}/>
-            <Route path='/single/:id' exact component={Single} />
 
+            <Route path='/single/:id' component={Single}/>
+
+            <Route path="/profile" render={(props) => (
+                <Profile {...props} user={this.state.user}/>
+            )}/>
+
+            <Route exact path="/" render={(props) => (
+                <Login {...props} setUser={this.setUser}/>
+            )}/>
+
+            <Route path="/logout" render={(props) => (
+                <Logout {...props} setUser={this.setUser}/>
+            )}/>
           </div>
         </Router>
     );
