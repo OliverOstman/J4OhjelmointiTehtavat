@@ -1,16 +1,16 @@
 # Mediapalvelut ja käyttäjäkokemus - Ohjelmointi Tehtävät
 
 ## First app
-[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/first-app) - [Sivusto](http://users.metropolia.fi/~olivero/react-project/) - [App.js](https://github.com/OliverOstman/J4OhjelmointiTehtavat/blob/first-app/src/App.js)
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/first-app) - [Sivusto](http://users.metropolia.fi/~olivero/react-project/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/first-app/src)
 
 ## Http-a
-[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/http-a) - [Sivusto](http://users.metropolia.fi/~olivero/http-a/) - [App.js](https://github.com/OliverOstman/J4OhjelmointiTehtavat/blob/http-a/src/App.js)
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/http-a) - [Sivusto](http://users.metropolia.fi/~olivero/http-a/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/http-a/src)
 
 ## Http-b
-[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/http-b) - [Sivusto](http://users.metropolia.fi/~olivero/http-b/) - [App.js](https://github.com/OliverOstman/J4OhjelmointiTehtavat/blob/http-b/src/App.js)
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/http-b) - [Sivusto](http://users.metropolia.fi/~olivero/http-b/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/http-b/src)
 
 ## Route
-[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/route) - [Sivusto](http://users.metropolia.fi/~olivero/route/) - [App.js](https://github.com/OliverOstman/J4OhjelmointiTehtavat/blob/route/src/App.js)
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/route) - [Sivusto](http://users.metropolia.fi/~olivero/route/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/route/src)
 
 ## Login
-[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/login) - [Sivusto](http://users.metropolia.fi/~olivero/login/) - [App.js](https://github.com/OliverOstman/J4OhjelmointiTehtavat/blob/login/src/App.js)
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/login) - [Sivusto](http://users.metropolia.fi/~olivero/login/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/login/srcs)
