@@ -12,6 +12,17 @@ class Single extends Component {
         },
     };
 
+    mainStyle = {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+    };
+
+    headerStyle = {
+      width: '100%',
+      textAlign: 'center',
+    };
+
     componentDidMount() {
         const {id} = this.props.match.params;
         getSingleMedia(id).then(item => {
@@ -21,11 +32,11 @@ class Single extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <h1>{this.state.file.title}</h1>
+            <div style={this.mainStyle}>
+                <h1 style={this.headerStyle}>{this.state.file.title}</h1>
                 <img src={this.mediaUrl + this.state.file.filename}
                      alt={this.state.file.title}/>
-            </React.Fragment>
+            </div>
         );
     }
 }

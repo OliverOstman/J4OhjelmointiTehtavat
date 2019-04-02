@@ -31,7 +31,7 @@ class App extends Component {
   // Muista vaihtaa basename!
   render() {
     return (
-        <Router basename='/~olivero/login'>
+        <Router basename='/~olivero/material-ui'>
           <div className="container">
             <Nav checkLogin={this.checkLogin}/>
 
