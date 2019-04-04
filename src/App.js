@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import {getAllMedia} from "./utils/MediaAPI";
+import {getAllMedia, getSingleMedia} from "./utils/MediaAPI";
 import Nav from "./components/Nav";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
@@ -16,9 +16,21 @@ class App extends Component {
   };
 
   setUser = (user) => {
-    // hae profiilikuva ja liitä user-objektiin
+      if (user !== null) {
+          getSingleMedia(1705).then(item => {
+              this.setState(() => {
+                  return {
+                      user: {
+                          ...user,
+                          profile_pic: "http://media.mw.metropolia.fi/wbma/uploads/" + item.filename,
+                      },
+                  };
+              })
+          });
+      } else {
+          this.setState({user});
+      }
 
-      this.setState({user});
   };
 
   checkLogin = () => {
@@ -29,7 +41,7 @@ class App extends Component {
     getAllMedia().then(items => {
       this.setState({picArray: items});
     })
-  };
+  }
 
   // Muista vaihtaa basename!
   render() {
