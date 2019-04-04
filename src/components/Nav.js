@@ -1,34 +1,44 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
-
-/*
-Account_box, Home ja exit_to_app
- */
+import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Home, AccountBox, ExitToApp} from "@material-ui/icons";
 
 const Nav = (props) => {
     return (
         <nav>
-            <ul>
-                <li>
-                    <Link to='/home'>Home</Link>
-                </li>
+            <List>
+                <ListItem button component={Link} to='/home'>
+                    <ListItemIcon>
+                        <Home/>
+                    </ListItemIcon>
+                    <ListItemText primary='Home'/>
+                </ListItem>
                 {props.checkLogin() &&
                 <React.Fragment>
-                    <li>
-                        <Link to='/profile'>Profile</Link>
-                    </li>
-                    <li>
-                        <Link to='/logout'>Logout</Link>
-                    </li>
+                    <ListItem button component={Link} to='/profile'>
+                        <ListItemIcon>
+                            <AccountBox/>
+                        </ListItemIcon>
+                        <ListItemText primary='Profile'/>
+                    </ListItem>
+                    <ListItem button component={Link} to='/logout'>
+                        <ListItemIcon>
+                            <ExitToApp/>
+                        </ListItemIcon>
+                        <ListItemText primary='Logout'/>
+                    </ListItem>
                 </React.Fragment>
                 }
                 {!props.checkLogin() &&
-                <li>
-                    <Link to='/'>Login</Link>
-                </li>
+                <ListItem button component={Link} to='/'>
+                    <ListItemIcon>
+                        <ExitToApp/>
+                    </ListItemIcon>
+                    <ListItemText primary='Login'/>
+                </ListItem>
                 }
-            </ul>
+            </List>
         </nav>
     );
 };

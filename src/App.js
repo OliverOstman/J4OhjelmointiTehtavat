@@ -7,6 +7,7 @@ import Profile from "./views/Profile";
 import Single from "./views/Single";
 import Login from "./views/Login";
 import Logout from "./views/Logout";
+import {Grid} from "@material-ui/core";
 
 class App extends Component {
   state = {
@@ -16,7 +17,8 @@ class App extends Component {
 
   setUser = (user) => {
     // hae profiilikuva ja liitä user-objektiin
-    this.setState({user});
+
+      this.setState({user});
   };
 
   checkLogin = () => {
@@ -33,9 +35,12 @@ class App extends Component {
   render() {
     return (
         <Router basename='/~olivero/material-ui'>
-          <div className="container">
-            <Nav checkLogin={this.checkLogin}/>
+          <Grid container>
+            <Grid item md={2} xs={12}>
+              <Nav checkLogin={this.checkLogin}/>
+            </Grid>
 
+            <Grid item md={10} xs={12}>
             <Route path='/home' render={(props) => (
                 <Home {...props} picArray={this.state.picArray}/>
             )}/>
@@ -53,7 +58,8 @@ class App extends Component {
             <Route path="/logout" render={(props) => (
                 <Logout {...props} setUser={this.setUser}/>
             )}/>
-          </div>
+            </Grid>
+          </Grid>
         </Router>
     );
   }

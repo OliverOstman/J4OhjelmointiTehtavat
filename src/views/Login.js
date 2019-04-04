@@ -64,7 +64,6 @@ class Login extends Component {
     };
 
     componentDidMount() {
-        console.log(localStorage.getItem('token'));
         if (localStorage.getItem('token') !== null) {
             getUser(localStorage.getItem('token')).then(response => {
                 this.props.setUser(response);
