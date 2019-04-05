@@ -63,6 +63,14 @@ class Login extends Component {
       //jos ei, tee esim alert()
     };
 
+    changeToggleForm = () => {
+      if (this.state.toggleForm === true) {
+          this.setState({toggleForm: false})
+      }  else {
+          this.setState({toggleForm: true})
+      }
+    };
+
     componentDidMount() {
         if (localStorage.getItem('token') !== null) {
             getUser(localStorage.getItem('token')).then(response => {
@@ -73,34 +81,45 @@ class Login extends Component {
     }
 
     render() {
-        return (
-            <div style={this.mainStyle}>
-                <div style={this.divStyle}>
-                    <h1>Login</h1>
-                    <form onSubmit={this.handleLoginSubmit}>
-                        Username: <br/>
-                        <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
-                        Password: <br/>
-                        <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
-                        <button type="submit">Login</button>
-                    </form>
+        if (this.state.toggleForm === true) {
+            return (
+                <div style={this.mainStyle}>
+                    <div style={this.divStyle}>
+                        <h1>Login</h1>
+                        <form onSubmit={this.handleLoginSubmit}>
+                            Username: <br/>
+                            <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
+                            Password: <br/>
+                            <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
+                            <button type="submit">Login</button>
+                        </form>
+                        <br/>
+                        <button onClick={this.changeToggleForm}>No account?</button>
+                    </div>
                 </div>
-                <div style={this.divStyle}>
-                    <h1>Register</h1>
-                    <form onSubmit={this.handleRegisterSubmit}>
-                        Username: <br/>
-                        <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
-                        Email: <br/>
-                        <input type='email' name='email' value={this.state.user.email} onChange={this.handleInputChange}/> <br/>
-                        Full name: <br/>
-                        <input type='text' name='full_name' value={this.state.user.full_name} onChange={this.handleInputChange}/> <br/>
-                        Password: <br/>
-                        <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
-                        <button type="submit">Register</button>
-                    </form>
+            )
+        } else {
+            return (
+                <div style={this.mainStyle}>
+                    <div style={this.divStyle}>
+                        <h1>Register</h1>
+                        <form onSubmit={this.handleRegisterSubmit}>
+                            Username: <br/>
+                            <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
+                            Email: <br/>
+                            <input type='email' name='email' value={this.state.user.email} onChange={this.handleInputChange}/> <br/>
+                            Full name: <br/>
+                            <input type='text' name='full_name' value={this.state.user.full_name} onChange={this.handleInputChange}/> <br/>
+                            Password: <br/>
+                            <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
+                            <button type="submit">Register</button>
+                        </form>
+                        <br/>
+                        <button onClick={this.changeToggleForm}>Already have an account?</button>
+                    </div>
                 </div>
-            </div>
-        );
+            )
+        }
     }
 }
 
