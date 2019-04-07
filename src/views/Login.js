@@ -59,6 +59,9 @@ class Login extends Component {
     };
 
     checkUserAvailable = (evt) => {
+        fetch("http://media.mw.metropolia.fi/wbma/users/username/" + evt).then(response => {
+            return response.json();
+        })
       //tarkasta onko käyttäjätunnus vappa
       //jos ei, tee esim alert()
     };
