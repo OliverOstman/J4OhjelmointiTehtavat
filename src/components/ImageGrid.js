@@ -13,6 +13,7 @@ const ImageGrid = (props) => {
                     <img src={mediaUrl + tile.thumbnails.w160} alt={tile.title}/>
                     <GridListTileBar
                         title={tile.title}
+                        subtitle={tile.description}
                         actionIcon={
                             <Button color="secondary" component={Link} to={'single/' + tile.file_id}>
                             View

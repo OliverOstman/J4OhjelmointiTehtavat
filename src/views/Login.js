@@ -90,9 +90,11 @@ class Login extends Component {
 
     changeToggleForm = () => {
       if (this.state.toggleForm === true) {
-          this.setState({toggleForm: false})
+          this.setState({toggleForm: false});
+          this.setState({message: ''});
       }  else {
-          this.setState({toggleForm: true})
+          this.setState({toggleForm: true});
+          this.setState({message: ''});
       }
     };
 
@@ -175,7 +177,7 @@ class Login extends Component {
                                        validators={[
                                            'isPasswordMatch',
                                            'required']}
-                                       errorMessage={[
+                                       errorMessages={[
                                            'password mismatch',
                                            'this field is required']}/>
                         <TextValidator fullWidth required name="email" id="email" label="Email"
