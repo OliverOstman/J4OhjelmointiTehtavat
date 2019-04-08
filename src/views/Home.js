@@ -1,11 +1,14 @@
 import React from 'react';
-import Table from "../components/table";
+import ImageGrid from '../components/ImageGrid';
+// import Table from '../components/table';
 import PropTypes from 'prop-types';
 
 const Home = (props) => {
+    const {picArray} = props;
     return (
         <React.Fragment>
-            <Table picArray={props.picArray}/>
+            {/* <ImageGrid picArray={picArray}/> <Table picArray={picArray}/> */}
+            <ImageGrid picArray={picArray}/>
         </React.Fragment>
     );
 };

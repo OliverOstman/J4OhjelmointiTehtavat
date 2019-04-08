@@ -1,31 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
+import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@material-ui/core";
+import {withStyles} from "@material-ui/core/styles";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
+const styles = {
+    card: {
+        maxWidth: '100%',
+    },
+    media: {
+        height: 140,
+    },
+};
+
 const Img = (props) => {
     const {thumbnails, screenshot, title} = props.pic;
+    const {classes} = props;
     if (thumbnails !== null) {
-        return <img src={mediaUrl + thumbnails.w160} alt={title}/>;
+        return <CardMedia className={classes.media} image={mediaUrl + thumbnails.w640} title={title}/>;
     } else {
-        return <img src={mediaUrl + screenshot} alt={title}/>;
+        return <CardMedia image={mediaUrl + screenshot} title={title}/>;
     }
 };
 
 const Tr = (props) => {
   const {title, description, file_id} = props.pic;
+  const {classes} = props;
   return (
       <tr>
           <td>
-              <Img pic={props.pic}/>
-          </td>
-          <td>
-              <h3>{title}</h3>
-              <p>{description}</p>
-          </td>
-          <td>
-              <Link to={`single/` + file_id}>View</Link>
+              <Card className={classes.card}>
+                  <CardActionArea>
+                      <Img {...props} pic={props.pic}/>
+                      <CardContent>
+                          <Typography gutterBottom variant="h5" component="h2">
+                              {title}
+                          </Typography>
+                          <Typography component="p">
+                              {description}
+                          </Typography>
+                      </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                      <Button size="small" color="primary" component={Link} to={'single/' + file_id}>
+                          View
+                      </Button>
+                  </CardActions>
+              </Card>
           </td>
       </tr>
   );
@@ -33,6 +56,7 @@ const Tr = (props) => {
 
 Tr.propTypes = {
     pic: PropTypes.object,
+    classes: PropTypes.object,
 };
 
-export default Tr;
+export default withStyles(styles) (Tr);
