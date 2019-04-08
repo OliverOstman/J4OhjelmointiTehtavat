@@ -1,24 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {login, register, getUser} from '../utils/MediaAPI';
+import {login, register, getUser, checkUser} from '../utils/MediaAPI';
+import {TextField, Button} from '@material-ui/core';
+import {Send} from '@material-ui/icons'
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {withStyles} from "@material-ui/core/styles";
+import red from '@material-ui/core/colors/red';
+
+const styles = theme => ({
+    container: {
+        width: '50%',
+        padding: '1rem',
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    alert: {
+        color: red[500],
+    }
+});
 
 class Login extends Component {
     state = {
         user: {
             username: '',
             password: '',
+            repeatPassword: '',
             email: '',
             full_name: '',
         },
         toggleForm: true,
-    };
-
-    divStyle = {
-        width: '50%',
-    };
-
-    mainStyle = {
-        display: 'flex',
+        validUser: true,
+        message: '',
     };
 
     handleLoginSubmit = (evt) => {
@@ -26,20 +39,29 @@ class Login extends Component {
         this.doLogin();
     };
 
-    handleRegisterSubmit = (evt) => {
-        evt.preventDefault();
-        register(this.state.user).then(user => {
-            console.log(user);
+    handleRegisterSubmit = () => {
+        const user = {...this.state.user};
+        delete user.repeatPassword;
+        register(user).then(user => {
+            if (user.message !== undefined) {
+                this.setState({message: user.message});
+                return;
+            }
             this.doLogin();
         });
     };
 
     doLogin = () => {
         login(this.state.user.username, this.state.user.password).then(response => {
-            console.log(response);
-            this.props.setUser(response.user);
-            localStorage.setItem('token', response.token);
-            this.props.history.push('/home');
+            if (response.user !== undefined) {
+                this.props.setUser(response.user);
+                localStorage.setItem('token', response.token);
+                this.props.history.push('/home');
+            } else {
+                this.setState({message: response.message});
+            }
+        }).catch((err) => {
+            console.log(err);
         });
     };
 
@@ -48,22 +70,22 @@ class Login extends Component {
         const value = target.value;
         const name = target.name;
 
-        this.setState((prevState) => {
-            return {
-                user: {
-                    ...prevState.user,
-                    [name]: value,
-                },
-            };
-        });
+        this.setState((prevState) => ({
+            user: {
+                ...prevState.user,
+                [name]: value,
+            },
+        }));
+        if (name === 'username') {
+            this.checkUsername(target.value);
+        }
     };
 
-    checkUserAvailable = (evt) => {
-        fetch("http://media.mw.metropolia.fi/wbma/users/username/" + evt).then(response => {
-            return response.json();
-        })
-      //tarkasta onko käyttäjätunnus vappa
-      //jos ei, tee esim alert()
+    checkUsername = (username) => {
+        checkUser(username).then((result) => {
+            console.log(result.available);
+            this.setState({validUser: result.available});
+        });
     };
 
     changeToggleForm = () => {
@@ -81,45 +103,105 @@ class Login extends Component {
                 this.props.history.push('/home');
             });
         }
+        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+            return value === this.state.user.password;
+        });
+        ValidatorForm.addValidationRule('isUserAvailable', () => {
+            return this.state.validUser;
+        });
     }
 
     render() {
+        const {classes} = this.props;
         if (this.state.toggleForm === true) {
             return (
-                <div style={this.mainStyle}>
-                    <div style={this.divStyle}>
-                        <h1>Login</h1>
-                        <form onSubmit={this.handleLoginSubmit}>
-                            Username: <br/>
-                            <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
-                            Password: <br/>
-                            <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
-                            <button type="submit">Login</button>
-                        </form>
-                        <br/>
-                        <button onClick={this.changeToggleForm}>No account?</button>
-                    </div>
+                <div className={classes.container}>
+                    <h1>Login</h1>
+                    <form onSubmit={this.handleLoginSubmit}>
+                        <TextField fullWidth required name="username" id="username"
+                                   label="Username"
+                                   value={this.state.user.username}
+                                   onChange={this.handleInputChange}/>
+                        <TextField fullWidth required name="password" type="password"
+                                   id="password"
+                                   label="Password"
+                                   value={this.state.user.password}
+                                   onChange={this.handleInputChange}/>
+                        <Button className={classes.button} variant="contained"
+                                color="primary" type="submit">
+                            <Send/>&nbsp;Login
+                        </Button>
+                    </form>
+                    <br/>
+                    <button onClick={this.changeToggleForm}>No account?</button>
+                    <br/>
+                    <p className={classes.alert}>
+                        {this.state.message}
+                    </p>
                 </div>
             )
         } else {
             return (
-                <div style={this.mainStyle}>
-                    <div style={this.divStyle}>
-                        <h1>Register</h1>
-                        <form onSubmit={this.handleRegisterSubmit}>
-                            Username: <br/>
-                            <input type='text' name='username' value={this.state.user.username} onChange={this.handleInputChange}/> <br/>
-                            Email: <br/>
-                            <input type='email' name='email' value={this.state.user.email} onChange={this.handleInputChange}/> <br/>
-                            Full name: <br/>
-                            <input type='text' name='full_name' value={this.state.user.full_name} onChange={this.handleInputChange}/> <br/>
-                            Password: <br/>
-                            <input type='password' name='password' value={this.state.user.password} onChange={this.handleInputChange}/> <br/>
-                            <button type="submit">Register</button>
-                        </form>
-                        <br/>
-                        <button onClick={this.changeToggleForm}>Already have an account?</button>
-                    </div>
+                <div className={classes.container}>
+                    <h1>Register</h1>
+                    <ValidatorForm instantValidate={true} onSubmit={this.handleRegisterSubmit}
+                                   onError={errors => console.log(errors)}>
+                        <TextValidator fullWidth required name="username" id="username"
+                                       label="Username"
+                                       value={this.state.user.username}
+                                       onChange={this.handleInputChange}
+                                       validators={[
+                                           'required',
+                                           'minStringLength:3',
+                                           'isUserAvailable']}
+                                       errorMessages={[
+                                           'this field is required',
+                                           'minimum 3 characters',
+                                           'username is not available']}/>
+                        <TextValidator fullWidth required name="password" type="password"
+                                       id="password" label="Password"
+                                       value={this.state.user.password}
+                                       onChange={this.handleInputChange}
+                                       validators={[
+                                           'required',
+                                           'minStringLength:5']}
+                                       errorMessages={[
+                                           'this field is required',
+                                           'minimum 5 characters']}/>
+                        <TextValidator fullWidth required name="repeatPassword" type="password"
+                                       id="repeatPassword" label="Repeat password"
+                                       value={this.state.user.repeatPassword}
+                                       onChange={this.handleInputChange}
+                                       validators={[
+                                           'isPasswordMatch',
+                                           'required']}
+                                       errorMessage={[
+                                           'password mismatch',
+                                           'this field is required']}/>
+                        <TextValidator fullWidth required name="email" id="email" label="Email"
+                                       value={this.state.user.email}
+                                       onChange={this.handleInputChange}
+                                       validators={[
+                                           'required',
+                                           'isEmail']}
+                                       errorMessages={[
+                                           'this field is required',
+                                           'email is not valid']}/>
+                        <TextField fullWidth name="full_name" id="full_name"
+                                   label="Full name"
+                                   value={this.state.user.full_name}
+                                   onChange={this.handleInputChange}/>
+                        <Button className={classes.button} variant="contained"
+                                color="primary" type="submit">
+                            <Send/>&nbsp;Register
+                        </Button>
+                    </ValidatorForm>
+                    <br/>
+                    <button onClick={this.changeToggleForm}>Already have an account?</button>
+                    <br/>
+                    <p className={classes.alert}>
+                        {this.state.message}
+                    </p>
                 </div>
             )
         }
@@ -129,6 +211,7 @@ class Login extends Component {
 Login.propTypes = {
     setUser: PropTypes.func,
     history: PropTypes.object,
+    classes: PropTypes.object,
 };
 
-export default Login;
+export default withStyles(styles) (Login);

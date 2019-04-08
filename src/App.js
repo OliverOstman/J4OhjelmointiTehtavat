@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import {getAllMedia, getSingleMedia} from "./utils/MediaAPI";
+import {getAllMedia, getFilesByTag} from "./utils/MediaAPI";
 import Nav from "./components/Nav";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
@@ -16,21 +16,24 @@ class App extends Component {
   };
 
   setUser = (user) => {
-      if (user !== null) {
-          getSingleMedia(1705).then(item => {
-              this.setState(() => {
-                  return {
-                      user: {
-                          ...user,
-                          profile_pic: "http://media.mw.metropolia.fi/wbma/uploads/" + item.filename,
-                      },
-                  };
-              })
+      getFilesByTag('profile').then((files) => {
+          const profilePic = files.filter((file) => {
+              let outputFile = null;
+              if (file.user_id === this.state.user.user_id) {
+                  outputFile = file;
+              }
+              return outputFile;
           });
-      } else {
-          this.setState({user});
-      }
-
+          this.setState((prevState) => {
+              return {
+                  user: {
+                      ...prevState.user,
+                      profile_pic: profilePic[0],
+                  },
+              };
+          });
+      });
+      this.setState({user});
   };
 
   checkLogin = () => {

@@ -1,35 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from "react-router-dom";
-import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import {ExitToApp} from "@material-ui/icons";
+import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
+import {withStyles} from "@material-ui/core/styles";
 
-const imageStyle = {
-    width: '20%',
+const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
+
+const styles = {
+    card: {
+        maxWidth: 345,
+    },
+    media: {
+        height: 300,
+        objectFit: 'cover'
+    }
 };
 
 const Profile = (props) => {
     const {username, email, full_name, profile_pic} = props.user;
-    // button component={Link} to='/logout'
+    const {classes} = props;
     return (
         <React.Fragment>
             <h1>Profile</h1>
-            <img src={profile_pic} alt="Profile pic" style={imageStyle}/>
-            <p>Username: {username}</p>
-            <p>email: {email}</p>
-            <p>Full name: {full_name}</p>
-            <ListItem button component={Link} to='/logout' style={imageStyle}>
-                <ListItemIcon>
-                    <ExitToApp/>
-                </ListItemIcon>
-                <ListItemText primary='Logout'/>
-            </ListItem>
+            <Card className={classes.card}>
+                <CardActionArea>
+                    <CardMedia className={classes.media} image={mediaUrl + profile_pic.filename} title="Profile picture"/>
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            Username: {username}
+                        </Typography>
+                        <Typography component="p">
+                            Email: {email}
+                        </Typography>
+                        <Typography component="p">
+                            Full name: {full_name}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
         </React.Fragment>
     );
 };
 
 Profile.propTypes = {
     user: PropTypes.object,
+    classes: PropTypes.object.isRequired,
 };
 
-export default Profile;
+export default withStyles(styles) (Profile);
