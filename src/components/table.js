@@ -8,7 +8,7 @@ const Table = (props) => {
     });
     return (
         <table>
-            <tbody>
+            <tbody style={{display: "flex", flexWrap: "wrap"}}>
             {rows}
             </tbody>
         </table>

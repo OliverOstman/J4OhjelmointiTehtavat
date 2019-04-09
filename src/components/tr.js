@@ -29,10 +29,10 @@ const Tr = (props) => {
   const {title, description, file_id} = props.pic;
   const {classes} = props;
   return (
-      <tr>
-          <td>
+      <tr style={{width: '50%'}}>
+          <td style={{width: '10%'}}>
               <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea component={Link} to={'single/' + file_id}>
                       <Img {...props} pic={props.pic}/>
                       <CardContent>
                           <Typography gutterBottom variant="h5" component="h2">

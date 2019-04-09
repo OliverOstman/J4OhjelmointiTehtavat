@@ -1,6 +1,6 @@
 import React from 'react';
-import ImageGrid from '../components/ImageGrid';
-// import Table from '../components/table';
+// import ImageGrid from '../components/ImageGrid';
+import Table from '../components/table';
 import PropTypes from 'prop-types';
 
 const Home = (props) => {
@@ -8,7 +8,7 @@ const Home = (props) => {
     return (
         <React.Fragment>
             {/* <ImageGrid picArray={picArray}/> <Table picArray={picArray}/> */}
-            <ImageGrid picArray={picArray}/>
+            <Table picArray={picArray}/>
         </React.Fragment>
     );
 };
