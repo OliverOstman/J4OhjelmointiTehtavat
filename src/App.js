@@ -20,9 +20,10 @@ class App extends Component {
       getFilesByTag('profile').then((files) => {
           const profilePic = files.filter((file) => {
               let outputFile = null;
+              if (this.state.user !== null) {
               if (file.user_id === this.state.user.user_id) {
                   outputFile = file;
-              }
+              }}
               return outputFile;
           });
           this.setState((prevState) => {
@@ -41,10 +42,14 @@ class App extends Component {
     return this.state.user !== null;
   };
 
+  getMedia = () => {
+      getAllMedia().then(items => {
+          this.setState({picArray: items});
+      });
+  };
+
   componentDidMount() {
-    getAllMedia().then(items => {
-      this.setState({picArray: items});
-    })
+    this.getMedia();
   }
 
   // Muista vaihtaa basename!
@@ -75,7 +80,9 @@ class App extends Component {
                 <Logout {...props} setUser={this.setUser}/>
             )}/>
 
-            <Route path="/upload" component={Upload}/>
+            <Route path="/upload" render={(props) => (
+                <Upload {...props} getMedia={this.getMedia}/>
+            )}/>
 
             </Grid>
           </Grid>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
+import {Redirect} from 'react-router-dom';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
@@ -16,6 +17,10 @@ const styles = {
 };
 
 const Profile = (props) => {
+    if (props.user === null) {
+        return <Redirect to="/"/>;
+    }
+
     const {username, email, full_name, profile_pic} = props.user;
     const {classes} = props;
     return (

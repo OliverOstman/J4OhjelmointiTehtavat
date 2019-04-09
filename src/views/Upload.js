@@ -9,17 +9,47 @@ class Upload extends Component {
         file: {
             title: "",
             description: "",
-            filename: "",
+            filename: undefined,
             filedata: null,
         },
+        loading: false,
     };
 
     handleFileSubmit = (evt) => {
-        console.log(evt);
+        this.setState({loading: true});
+        const fd = new FormData();
+        fd.append("title", this.state.file.title);
+        fd.append("description", this.state.file.description);
+        fd.append("file", this.state.file.filedata);
+
+        const options = {
+            method: "POST",
+            body: fd,
+            headers: {
+                "x-access-token": localStorage.getItem('token'),
+            },
+        };
+        fetch(this.mediaUrl + "media", options).then(response => {
+            return response.json();
+        }).then(json => {
+            console.log(json);
+            setTimeout(() => {
+                this.props.history.push('/home');
+                this.props.getMedia();
+                this.setState({loading: false});
+            }, 2000);
+
+        })
     };
 
     handleFileChange = (evt) => {
-        console.log(evt);
+        evt.persist();
+        this.setState((prevState) => ({
+            file: {
+                ...prevState.file,
+                filedata: evt.target.files[0],
+            },
+        }));
     };
 
     handleInputChange = (evt) => {
@@ -35,6 +65,10 @@ class Upload extends Component {
         }));
     };
 
+    /*
+    validators={["isFile", "maxFileSize:" + 10 * 1024 * 1024, "allowedExtensions:image/jpg, image/png, image/gif, video/mp4, video/mov, audio/mp3, audio/aac"]}
+    errorMessages={["File is not valid", "Size must not exceed 10MB", "Only media files"]}
+     */
     render() {
         return (
             <React.Fragment>
@@ -56,9 +90,10 @@ class Upload extends Component {
                         <TextValidator fullWidth name="filedata" label="File" type="file"
                                        value={this.state.file.filename}
                                        onChange={this.handleFileChange}
-                                       validators={["required", "isFile", "maxFileSize:" + 10 * 1024 * 1024, "allowedExtensions:image/*,video/*,audio/*"]}
-                                       errorMessages={['this field is required', "File is not valid", "Size must not exceed 10MB", "Only media files"]}/>
-                        <Button type="submit" variant="contained" color="primary">Upload</Button>
+                                       />
+                        <br/>
+                        <br/>
+                        <Button type="submit" variant="contained" color="primary">Upload&nbsp;{this.state.loading && "Loading..."}</Button>
                     </ValidatorForm>
                 </div>
             </React.Fragment>
@@ -67,7 +102,8 @@ class Upload extends Component {
 }
 
 Upload.propTypes = {
-    match: PropTypes.object,
+    history: PropTypes.object,
+    getMedia: PropTypes.func,
 };
 
 export default Upload;
