@@ -8,6 +8,7 @@ import Single from "./views/Single";
 import Login from "./views/Login";
 import Logout from "./views/Logout";
 import {Grid} from "@material-ui/core";
+import Upload from "./views/Upload";
 
 class App extends Component {
   state = {
@@ -73,6 +74,9 @@ class App extends Component {
             <Route path="/logout" render={(props) => (
                 <Logout {...props} setUser={this.setUser}/>
             )}/>
+
+            <Route path="/upload" component={Upload}/>
+
             </Grid>
           </Grid>
         </Router>
