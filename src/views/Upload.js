@@ -126,6 +126,22 @@ class Upload extends Component {
         }
     };
 
+    getFilters = (value) => {
+        const pattern = '\\[f\\](.*?)\\[\\/f\\]';
+        const re = new RegExp(pattern);
+        // console.log(re.exec(value));
+        try {
+            return JSON.parse(re.exec(value)[1]);
+        } catch (e) {
+            return {
+                brightness: 100,
+                contrast: 100,
+                warmth: 0,
+                saturation: 100,
+            };
+        }
+    };
+
     /*
     validators={["isFile", "maxFileSize:" + 10 * 1024 * 1024, "allowedExtensions:image/jpg, image/png, image/gif, video/mp4, video/mov, audio/mp3, audio/aac"]}
     errorMessages={["File is not valid", "Size must not exceed 10MB", "Only media files"]}
@@ -167,6 +183,7 @@ class Upload extends Component {
                     <div className={classes.one}>
                         <h1>Image</h1>
                         <img width="400" alt=""/>
+                        <h1>Ei toimi</h1>
                         <div className={classes.main}>
                             <input type="range" min="0" max="200" id="brightness" onChange={this.handleRangeChange} className={classes.two}/>
                             <p>brightness: {this.filters.brightness} / 200</p>
