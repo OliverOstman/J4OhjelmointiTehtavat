@@ -55,7 +55,7 @@ class App extends Component {
   // Muista vaihtaa basename!
   render() {
     return (
-        <Router basename='/~olivero/upload/'>
+        <Router basename='/~olivero/J4/upload/'>
           <Grid container>
             <Grid item md={2} xs={12}>
               <Nav checkLogin={this.checkLogin}/>

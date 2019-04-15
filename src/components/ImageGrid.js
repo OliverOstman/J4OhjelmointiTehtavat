@@ -10,7 +10,10 @@ const ImageGrid = (props) => {
         <GridList style={{margin: 0}}>
             {props.picArray.map(tile => (
                 <GridListTile key={tile.file_id} style={{height: 260}}>
-                    <img src={mediaUrl + tile.thumbnails.w160} alt={tile.title}/>
+                    { tile.thumbnails !== undefined &&
+                        <img src={mediaUrl + tile.thumbnails.w160} alt={tile.title}/>}
+                    { tile.screenshot !== undefined &&
+                    <img src={mediaUrl + tile.screenshot} alt={tile.title}/>}
                     <GridListTileBar
                         title={tile.title}
                         subtitle={tile.description}
