@@ -22,4 +22,4 @@
 [Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/forms) - [Sivusto (Ei toimi enään)](http://users.metropolia.fi/~olivero/J4/forms/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/forms/src)
 
 ## Upload
-[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/upload) - [Sivusto](http://users.metropolia.fi/~olivero/J4/test/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/upload/src)
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/upload) - [Sivusto](http://users.metropolia.fi/~olivero/J4/upload/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/upload/src)
