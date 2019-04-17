@@ -48,6 +48,10 @@ class App extends Component {
       });
   };
 
+    setUserLogout = (user) => {
+        this.setState({user});
+    };
+
   componentDidMount() {
     this.getMedia();
   }
@@ -77,7 +81,7 @@ class App extends Component {
             )}/>
 
             <Route path="/logout" render={(props) => (
-                <Logout {...props} setUser={this.setUser}/>
+                <Logout {...props} setUserLogout={this.setUserLogout}/>
             )}/>
 
             <Route path="/upload" render={(props) => (

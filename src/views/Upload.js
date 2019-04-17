@@ -1,29 +1,31 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {Button} from "@material-ui/core";
-import LinearProgress from '@material-ui/core/LinearProgress';
+import {Button, LinearProgress, Typography} from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
+import {Slider} from '@material-ui/lab';
+import '../views/css/upload.css';
 
 const styles = () => ({
     root: {
         flexGrow: 1,
-    },
-    one: {
-        display: "none",
-    },
-    main: {
-        display: "flex",
-    },
-    two: {
-        width: "50%"
     }
 });
 
-const fr = new FileReader();
-
 class Upload extends Component {
     mediaUrl = "http://media.mw.metropolia.fi/wbma/";
+
+    componentDidMount() {
+        this.fr.addEventListener('load', () => {
+            this.setState((prevState) => ({
+                ...prevState,
+                imageData: this.fr.result,
+            }));
+        });
+    }
+
+    fr = new FileReader();
+
     state = {
         file: {
             title: "",
@@ -32,39 +34,23 @@ class Upload extends Component {
             filedata: null,
         },
         loading: false,
+        imageData: null,
+        filters: {
+            brightness: 100,
+            contrast: 100,
+            warmth: 0,
+            saturation: 100,
+        },
+        type: '',
     };
-
-    filters = {
-        brightness: 100,
-        contrast: 100,
-        warmth: 0,
-        saturation: 100,
-    };
-
-    p1 = null;
-    p2 = null;
-    p3 = null;
-    p4 = null;
-    image = null;
-
-    componentDidMount() {
-        this.image = document.querySelector('img');
-        const p = document.querySelectorAll('p');
-        this.p1 = p[0];
-        this.p2 = p[1];
-        this.p3 = p[2];
-        this.p4 = p[3];
-        fr.addEventListener('load', () => {
-            this.image.src = fr.result;
-        });
-    }
 
     handleFileSubmit = (evt) => {
         this.setState({loading: true});
         const fd = new FormData();
-        fd.append("title", this.state.file.title);
-        fd.append("description", this.state.file.description);
-        fd.append("file", this.state.file.filedata);
+        fd.append('title', this.state.file.title);
+        const description  = `[d]${this.state.file.description}[/d][f]${JSON.stringify(this.state.filters)}[/f]`;
+        fd.append('description', description);
+        fd.append('file', this.state.file.filedata);
 
         const options = {
             method: "POST",
@@ -88,10 +74,11 @@ class Upload extends Component {
 
     handleFileChange = (evt) => {
         evt.persist();
-        const { classes } = this.props;
-        classes.one = {display: "flex"};
-        fr.readAsDataURL(evt.target.files[0]);
+        console.log(evt.target.files[0]);
+        this.fr.readAsDataURL(evt.target.files[0]);
         this.setState((prevState) => ({
+            ...prevState,
+            type: evt.target.files[0].type,
             file: {
                 ...prevState.file,
                 filedata: evt.target.files[0],
@@ -112,34 +99,16 @@ class Upload extends Component {
         }));
     };
 
-    handleRangeChange = (element) => {
-        this.filters[element.target.id] = element.target.value;
-        this.image.style.filter = `brightness(${this.filters.brightness}%) contrast(${this.filters.contrast}%) sepia(${this.filters.warmth}%) saturate(${this.filters.saturation}%)`;
-        if (element.target.id === "brightness") {
-            this.p1.innerHTML = (element.target.id + ": " + element.target.value + " / " + element.target.max);
-        } else if (element.target.id === "contrast") {
-            this.p2.innerHTML = (element.target.id + ": " + element.target.value + " / " + element.target.max);
-        } else if (element.target.id === "warmth") {
-            this.p4.innerHTML = (element.target.id + ": " + element.target.value + " / " + element.target.max);
-        } else if (element.target.id === "saturation") {
-            this.p3.innerHTML = (element.target.id + ": " + element.target.value + " / " + element.target.max);
-        }
-    };
-
-    getFilters = (value) => {
-        const pattern = '\\[f\\](.*?)\\[\\/f\\]';
-        const re = new RegExp(pattern);
-        // console.log(re.exec(value));
-        try {
-            return JSON.parse(re.exec(value)[1]);
-        } catch (e) {
-            return {
-                brightness: 100,
-                contrast: 100,
-                warmth: 0,
-                saturation: 100,
-            };
-        }
+    handleRangeChange = (rawValue, props) => {
+        console.log(rawValue);
+        const {name} = props;
+        const value = Math.round(rawValue);
+        this.setState((prevState) => ({
+            filters: {
+                ...prevState.filters,
+                [name]: value,
+            },
+        }));
     };
 
     /*
@@ -151,7 +120,7 @@ class Upload extends Component {
         const { classes } = this.props;
         return (
             <React.Fragment>
-                <div className={classes.main}>
+                <div className={'main'}>
                 <div style={{width: "50%", padding: '1rem'}}>
                     <h1>Upload</h1>
                     <ValidatorForm instantValidate={false}
@@ -180,27 +149,51 @@ class Upload extends Component {
                         <Button type="submit" variant="contained" color="primary">Upload</Button>
                     </ValidatorForm>
                 </div>
-                    <div className={classes.one}>
+                    {this.state.imageData !== null && this.state.type.includes('image') &&
+                    <div>
                         <h1>Image</h1>
-                        <img width="400" alt=""/>
-                        <h1>Ei toimi</h1>
-                        <div className={classes.main}>
-                            <input type="range" min="0" max="200" id="brightness" onChange={this.handleRangeChange} className={classes.two}/>
-                            <p>brightness: {this.filters.brightness} / 200</p>
+                        <img src={this.state.imageData} alt="preview"
+                             className={'preview'}
+                             style={{filter: `brightness(${this.state.filters.brightness}%) contrast(${this.state.filters.contrast}%) sepia(${this.state.filters.warmth}%) saturate(${this.state.filters.saturation}%)`}}/>
+                             <br/>
+                             <br/>
+                        <div>
+                            <Typography id="brightness-label">Brightness: {this.state.filters.brightness}%</Typography>
+                            <Slider name="brightness" value={this.state.filters.brightness}
+                                    valueReducer={this.handleRangeChange}
+                                    min={0}
+                                    max={200}
+                                    step={1}
+                                    aria-labelledby="brightness-label"/>
                         </div>
-                        <div className={classes.main}>
-                            <input type="range" min="0" max="200" id="contrast" onChange={this.handleRangeChange} className={classes.two}/>
-                            <p>contrast: {this.filters.contrast} / 200</p>
+                        <div>
+                            <Typography id="contrast-label">Contrast: {this.state.filters.contrast}%</Typography>
+                            <Slider name="contrast" value={this.state.filters.contrast}
+                                    valueReducer={this.handleRangeChange}
+                                    min={0}
+                                    max={200}
+                                    step={1}
+                                    aria-labelledby="contrast-label"/>
                         </div>
-                        <div className={classes.main}>
-                            <input type="range" min="0" max="200" id="saturation" onChange={this.handleRangeChange} className={classes.two}/>
-                            <p>saturation: {this.filters.saturation} / 200</p>
+                        <div>
+                            <Typography id="saturation-label">Saturation: {this.state.filters.saturation}%</Typography>
+                            <Slider name="saturation" value={this.state.filters.saturation}
+                                    valueReducer={this.handleRangeChange}
+                                    min={0}
+                                    max={200}
+                                    step={1}
+                                    aria-labelledby="saturation-label"/>
                         </div>
-                        <div className={classes.main}>
-                            <input type="range" min="0" max="100" id="warmth" onChange={this.handleRangeChange} className={classes.two}/>
-                            <p>warmth: {this.filters.warmth} / 100</p>
+                        <div>
+                            <Typography id="warmth-label">Warmth: {this.state.filters.warmth}%</Typography>
+                            <Slider name="warmth" value={this.state.filters.warmth}
+                                    valueReducer={this.handleRangeChange}
+                                    min={0}
+                                    max={100}
+                                    step={1}
+                                    aria-labelledby="warmth-label"/>
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </React.Fragment>
         );
