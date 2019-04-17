@@ -15,12 +15,31 @@ const getDescription = (text) => {
     }
 };
 
+const getFilters = (text) => {
+    const pattern = '\\[f\\](.*?)\\[\\/f\\]';
+    const re = new RegExp(pattern);
+    if (re.exec(text) !== null) {
+        return JSON.parse(re.exec(text)[1]);
+    } else {
+        return undefined;
+    }
+};
+
 const ImageGrid = (props) => {
     return (
         <GridList style={{margin: 0}}>
             {props.picArray.map(tile => (
                 <GridListTile key={tile.file_id} style={{height: 260}}>
                     {
+                        (tile.thumbnails !== undefined && getFilters(tile.description) !== undefined
+                            &&
+                            <img src={mediaUrl + tile.thumbnails.w160} alt={tile.title}
+                                 style={{filter: `brightness(${getFilters(tile.description).brightness}%)
+                             contrast(${getFilters(tile.description).contrast}%)
+                             sepia(${getFilters(tile.description).warmth}%)
+                             saturate(${getFilters(tile.description).saturation}%)`}}
+                            />)
+                        ||
                         (tile.thumbnails !== undefined
                         &&
                         <img src={mediaUrl + tile.thumbnails.w160} alt={tile.title}/> )
