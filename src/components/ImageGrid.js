@@ -5,6 +5,16 @@ import {GridList, GridListTile, GridListTileBar, Button,} from '@material-ui/cor
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
+const getDescription = (text) => {
+    const pattern = '\\[d\\]((.|[\\r\\n])*?)\\[\\/d\\]';
+    const re = new RegExp(pattern);
+    try {
+        return re.exec(text)[1];
+    } catch (e) {
+        return text;
+    }
+};
+
 const ImageGrid = (props) => {
     return (
         <GridList style={{margin: 0}}>
@@ -23,7 +33,7 @@ const ImageGrid = (props) => {
                     }
                     <GridListTileBar
                         title={tile.title}
-                        subtitle={tile.description}
+                        subtitle={getDescription(tile.description)}
                         actionIcon={
                             <Button color="secondary" component={Link} to={'single/' + tile.file_id}>
                             View

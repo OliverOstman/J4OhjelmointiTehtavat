@@ -100,7 +100,6 @@ class Upload extends Component {
     };
 
     handleRangeChange = (rawValue, props) => {
-        console.log(rawValue);
         const {name} = props;
         const value = Math.round(rawValue);
         this.setState((prevState) => ({
@@ -160,6 +159,7 @@ class Upload extends Component {
                         <div>
                             <Typography id="brightness-label">Brightness: {this.state.filters.brightness}%</Typography>
                             <Slider name="brightness" value={this.state.filters.brightness}
+                                    className={'slider'}
                                     valueReducer={this.handleRangeChange}
                                     min={0}
                                     max={200}
@@ -169,6 +169,7 @@ class Upload extends Component {
                         <div>
                             <Typography id="contrast-label">Contrast: {this.state.filters.contrast}%</Typography>
                             <Slider name="contrast" value={this.state.filters.contrast}
+                                    className={'slider'}
                                     valueReducer={this.handleRangeChange}
                                     min={0}
                                     max={200}
@@ -178,6 +179,7 @@ class Upload extends Component {
                         <div>
                             <Typography id="saturation-label">Saturation: {this.state.filters.saturation}%</Typography>
                             <Slider name="saturation" value={this.state.filters.saturation}
+                                    className={'slider'}
                                     valueReducer={this.handleRangeChange}
                                     min={0}
                                     max={200}
@@ -187,6 +189,7 @@ class Upload extends Component {
                         <div>
                             <Typography id="warmth-label">Warmth: {this.state.filters.warmth}%</Typography>
                             <Slider name="warmth" value={this.state.filters.warmth}
+                                    className={'slider'}
                                     valueReducer={this.handleRangeChange}
                                     min={0}
                                     max={100}

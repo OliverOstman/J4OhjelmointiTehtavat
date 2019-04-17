@@ -1,7 +1,12 @@
 .preview {
-    width: 400px
+    width: 400px;
 }
 
 .main {
     display: flex;
+}
+
+.slider {
+    max-width: 75%;
+    height: 10px;
 }
