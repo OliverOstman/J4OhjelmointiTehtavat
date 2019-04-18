@@ -9,7 +9,9 @@ class MyFiles extends Component {
     };
 
     updateImages = () => {
-        getUserMedia().then()
+        getUserMedia(localStorage.getItem('token')).then((pics) => {
+            this.setState({picArray: pics});
+        })
 };
 
     componentDidMount() {

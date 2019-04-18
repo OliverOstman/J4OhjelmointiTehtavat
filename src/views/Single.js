@@ -82,7 +82,7 @@ class Single extends Component {
                     (this.state.file.media_type === "audio" &&
                     <audio controls src={this.mediaUrl + this.state.file.filename}/>)
                 }
-                <p>
+                <p style={this.headerStyle}>
                     {this.getDescription(this.state.file.description)}
                 </p>
             </div>
