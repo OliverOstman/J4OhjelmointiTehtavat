@@ -83,7 +83,6 @@ class Login extends Component {
 
     checkUsername = (username) => {
         checkUser(username).then((result) => {
-            console.log(result.available);
             this.setState({validUser: result.available});
         });
     };
