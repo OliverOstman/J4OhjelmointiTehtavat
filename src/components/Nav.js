@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import {Home, AccountBox, ExitToApp, AddCircle} from "@material-ui/icons";
+import {Home, AccountBox, ExitToApp, AddCircle, Folder} from "@material-ui/icons";
 
 const Nav = (props) => {
     return (
@@ -27,6 +27,12 @@ const Nav = (props) => {
                             <AccountBox/>
                         </ListItemIcon>
                         <ListItemText primary='Profile'/>
+                    </ListItem>
+                    <ListItem button component={Link} to='/my-files'>
+                        <ListItemIcon>
+                            <Folder/>
+                        </ListItemIcon>
+                        <ListItemText primary='My Files'/>
                     </ListItem>
                     <ListItem button component={Link} to='/logout'>
                         <ListItemIcon>

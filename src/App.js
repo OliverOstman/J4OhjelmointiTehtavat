@@ -9,6 +9,7 @@ import Login from "./views/Login";
 import Logout from "./views/Logout";
 import {Grid} from "@material-ui/core";
 import Upload from "./views/Upload";
+import MyFiles from "./views/MyFiles";
 
 class App extends Component {
   state = {
@@ -87,6 +88,8 @@ class App extends Component {
             <Route path="/upload" render={(props) => (
                 <Upload {...props} getMedia={this.getMedia}/>
             )}/>
+
+            <Route path="/my-files" component={MyFiles}/>
 
             </Grid>
           </Grid>

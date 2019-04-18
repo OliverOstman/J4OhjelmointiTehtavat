@@ -57,34 +57,36 @@ class Single extends Component {
     };
 
     render() {
-        if (this.state.filters !== undefined) {
         return (
             <div style={this.mainStyle}>
                 <h1 style={this.headerStyle}>{this.state.file.title}</h1>
-                <img src={this.mediaUrl + this.state.file.filename}
-                     alt={this.state.file.title}
-                     style={{filter: `brightness(${this.state.filters.brightness}%)
+                {
+                    (this.state.filters !== undefined && this.state.file.media_type === "image" &&
+                        <img src={this.mediaUrl + this.state.file.filename}
+                             alt={this.state.file.title}
+                             style={{filter: `brightness(${this.state.filters.brightness}%)
                       contrast(${this.state.filters.contrast}%)
                        sepia(${this.state.filters.warmth}%)
                         saturate(${this.state.filters.saturation}%)`}}
-                />
+                        />)
+                    ||
+                    (this.state.file.media_type === "image" &&
+                        <img src={this.mediaUrl + this.state.file.filename}
+                          alt={this.state.file.title}
+                    />)
+                    ||
+                    (this.state.file.media_type === "video" &&
+                    <video controls src={this.mediaUrl + this.state.file.filename}
+                           width="1080"/>)
+                    ||
+                    (this.state.file.media_type === "audio" &&
+                    <audio controls src={this.mediaUrl + this.state.file.filename}/>)
+                }
                 <p>
                     {this.getDescription(this.state.file.description)}
                 </p>
             </div>
         );
-        } else {
-            return (
-                <div style={this.mainStyle}>
-                    <h1 style={this.headerStyle}>{this.state.file.title}</h1>
-                    <img src={this.mediaUrl + this.state.file.filename}
-                         alt={this.state.file.title}/>
-                    <p>
-                        {this.getDescription(this.state.file.description)}
-                    </p>
-                </div>
-            );
-        }
     }
 }
 

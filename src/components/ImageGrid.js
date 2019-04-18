@@ -18,9 +18,15 @@ const getDescription = (text) => {
 const getFilters = (text) => {
     const pattern = '\\[f\\](.*?)\\[\\/f\\]';
     const re = new RegExp(pattern);
+    /*
     if (re.exec(text) !== null) {
         return JSON.parse(re.exec(text)[1]);
     } else {
+        return undefined;
+    } */
+    try {
+        return JSON.parse(re.exec(text)[1]);
+    } catch (e) {
         return undefined;
     }
 };

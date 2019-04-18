@@ -1,7 +1,26 @@
 const apiUrl = "http://media.mw.metropolia.fi/wbma/";
 
 const getAllMedia = () => {
-    return fetch(apiUrl + 'media/').then(response => {
+    return fetch(apiUrl + 'media/' + "?limit=50").then(response => {
+        return response.json();
+    }).then(json => {
+        return Promise.all(json.map(item => {
+            return fetch(apiUrl + 'media/' + item.file_id).then(response => {
+                return response.json();
+            });
+        })).then(items => {
+            return items;
+        })
+    })
+};
+
+const getUserMedia = (token) => {
+    const settings = {
+        headers: {
+            'x-access-token': token,
+        }
+    };
+    return fetch(apiUrl + 'media/user', settings).then(response => {
         return response.json();
     }).then(json => {
         return Promise.all(json.map(item => {
@@ -69,4 +88,4 @@ const getFilesByTag = (tag) => {
     });
 };
 
-export {getAllMedia, getSingleMedia, login, register, getUser, checkUser, getFilesByTag};
+export {getAllMedia, getSingleMedia, login, register, getUser, checkUser, getFilesByTag, getUserMedia};
