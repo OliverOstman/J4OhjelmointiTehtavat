@@ -76,6 +76,17 @@ const getUser = (token) => {
     });
 };
 
+const getUserUsername = (token, user) => {
+    const settings = {
+        headers: {
+            'x-access-token': token,
+        }
+    };
+    return fetch(apiUrl + "users/" + user, settings).then(response => {
+        return response.json();
+    });
+};
+
 const checkUser = (username) => {
     return fetch(apiUrl + 'users/username/' + username).then(response => {
         return response.json();
@@ -88,4 +99,4 @@ const getFilesByTag = (tag) => {
     });
 };
 
-export {getAllMedia, getSingleMedia, login, register, getUser, checkUser, getFilesByTag, getUserMedia};
+export {getAllMedia, getSingleMedia, login, register, getUser, checkUser, getFilesByTag, getUserMedia, getUserUsername};

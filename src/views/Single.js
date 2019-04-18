@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {getSingleMedia} from "../utils/MediaAPI";
+import {getSingleMedia, getUserUsername} from "../utils/MediaAPI";
 
 class Single extends Component {
     mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
@@ -16,6 +16,7 @@ class Single extends Component {
             warmth: 0,
             saturation: 100,
         },
+        username: "",
     };
 
     mainStyle = {
@@ -27,13 +28,20 @@ class Single extends Component {
     headerStyle = {
       width: '100%',
       textAlign: 'center',
+        margin: "1% 0%",
     };
 
     componentDidMount() {
         const {id} = this.props.match.params;
         getSingleMedia(id).then(item => {
             this.setState({file: item, filters: this.getFilters(item.description)})
-        })
+        }).then(() => {
+            if (localStorage.getItem('token') !== null) {
+            getUserUsername(localStorage.getItem('token'), this.state.file.user_id).then(response => {
+                this.setState({username: response.username});
+            });
+            }
+        });
     }
 
     getFilters = (text) => {
@@ -60,6 +68,7 @@ class Single extends Component {
         return (
             <div style={this.mainStyle}>
                 <h1 style={this.headerStyle}>{this.state.file.title}</h1>
+                {(this.state.username !== "" && <p style={this.headerStyle}>Uploader: {this.state.username}</p>)}
                 {
                     (this.state.filters !== undefined && this.state.file.media_type === "image" &&
                         <img src={this.mediaUrl + this.state.file.filename}
