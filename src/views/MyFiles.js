@@ -19,7 +19,7 @@ class MyFiles extends Component {
     render() {
         return (
             <React.Fragment>
-                <ImageGrid picArray={this.picArray}/>
+                <ImageGrid picArray={this.state.picArray}/>
             </React.Fragment>
         )
     }

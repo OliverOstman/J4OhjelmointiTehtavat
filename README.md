@@ -1,4 +1,4 @@
-[Sivusto](http://users.metropolia.fi/~olivero/upload/)
+[Sivusto](http://users.metropolia.fi/~olivero/mediaPlayer/)
 
 ##
 
