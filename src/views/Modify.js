@@ -110,11 +110,6 @@ class Modify extends Component {
         }));
     };
 
-    /*
-    validators={["isFile", "maxFileSize:" + 10 * 1024 * 1024, "allowedExtensions:image/jpg, image/png, image/gif, video/mp4, video/mov, audio/mp3, audio/aac"]}
-    errorMessages={["File is not valid", "Size must not exceed 10MB", "Only media files"]}
-     */
-    // Linear Determinate jos jaksat
     render() {
         const { classes } = this.props;
         return (
@@ -135,9 +130,6 @@ class Modify extends Component {
                                            onChange={this.handleInputChange}
                                            validators={["required"]}
                                            errorMessages={['this field is required']}/>
-                            <TextValidator fullWidth name="filedata" label="File" type="file"
-                                           value={this.state.file.filename}
-                                           onChange={this.handleFileChange}/>
 
                             <br/>
                             {this.state.loading && <div className={classes.root}>
