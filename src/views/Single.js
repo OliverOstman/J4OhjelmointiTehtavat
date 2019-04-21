@@ -67,6 +67,9 @@ class Single extends Component {
     render() {
         return (
             <div style={this.mainStyle}>
+                <button onClick={() => {
+                    window.history.back();
+                }}>Back</button>
                 <h1 style={this.headerStyle}>{this.state.file.title}</h1>
                 {(this.state.username !== "" && <p style={this.headerStyle}>Uploader: {this.state.username}</p>)}
                 {
@@ -101,6 +104,7 @@ class Single extends Component {
 
 Single.propTypes = {
     match: PropTypes.object,
+    history: PropTypes.object,
 };
 
 export default Single;
