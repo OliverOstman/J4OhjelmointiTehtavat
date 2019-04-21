@@ -23,3 +23,6 @@
 
 ## Upload
 [Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/upload) - [Sivusto](http://users.metropolia.fi/~olivero/J4/upload/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/upload/src)
+
+## Media Player
+[Branch](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/mediaPlayer) - [Sivusto](http://users.metropolia.fi/~olivero/J4/mediaPlayer/) - [src](https://github.com/OliverOstman/J4OhjelmointiTehtavat/tree/mediaPlayer/src)
