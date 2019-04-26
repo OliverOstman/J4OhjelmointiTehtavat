@@ -10,6 +10,7 @@ import Logout from "./views/Logout";
 import {Grid} from "@material-ui/core";
 import Upload from "./views/Upload";
 import MyFiles from "./views/MyFiles";
+import Modify from './views/Modify';
 
 class App extends Component {
   state = {
@@ -60,7 +61,7 @@ class App extends Component {
   // Muista vaihtaa basename!
   render() {
     return (
-        <Router basename='/~olivero/J4/mediaPlayer/'>
+        <Router basename='/~olivero/J4/final/'>
           <Grid container>
             <Grid item md={2} xs={12}>
               <Nav checkLogin={this.checkLogin}/>
@@ -90,6 +91,8 @@ class App extends Component {
             )}/>
 
             <Route path="/my-files" component={MyFiles}/>
+
+            <Route path="/modify/:id" component={Modify}/>
 
             </Grid>
           </Grid>

@@ -120,4 +120,21 @@ const getFilesByTag = (tag) => {
     });
 };
 
-export {getAllMedia, getSingleMedia, login, register, getUser, checkUser, getFilesByTag, getUserMedia, getUserUsername, deleteMedia};
+const modify = (id, data, token) => {
+    const options = {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-type': 'application/json',
+            'x-access-token': token,
+        },
+    };
+
+    return fetch(apiUrl + 'media/' + id, options)
+        .then(handleFetchErrors)
+        .then(response => {
+            return response.json();
+        });
+};
+
+export {getAllMedia, getSingleMedia, login, register, getUser, checkUser, getFilesByTag, getUserMedia, getUserUsername, deleteMedia, modify};

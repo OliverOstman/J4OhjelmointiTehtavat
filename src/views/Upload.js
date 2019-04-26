@@ -140,7 +140,8 @@ class Upload extends Component {
                                        onChange={this.handleFileChange}/>
 
                         <br/>
-                        {this.state.loading && <div className={classes.root}>
+                        {this.state.loading &&
+                        <div className={classes.root}>
                             <br/>
                             <LinearProgress />
                         </div>}
